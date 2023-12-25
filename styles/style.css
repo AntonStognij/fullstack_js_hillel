@@ -1,0 +1,224 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-weight: 500;
+    font-family: Montserrat, sans-serif;
+    letter-spacing: 0.2px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+h2 {
+    text-align: center;
+    font-size: 44px;
+    font-weight: 600;
+    line-height: 0.8;
+    letter-spacing: 0.1px;
+    margin-top: 73px;
+    margin-bottom: 59px;
+}
+
+hr {
+    width: 884px;
+    height: 3px;
+    background-color: #E4E4E4;
+    color: #E4E4E4;
+    border: none;
+}
+
+figure {
+    margin: 0;
+}
+
+.header,
+.footer {
+    max-width: 1440px;
+    margin: 0 auto;
+    border: none;
+}
+
+.header__wrapper {
+    padding: 26px 40px 28px 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer .header__wrapper {
+    justify-content: space-around;
+}
+
+.header__list {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 94px;
+}
+
+.header__list a {
+    color: #252B42;
+    font-weight: 600;
+    line-height: 1.75;
+
+}
+
+.header__list .active {
+    color: #FA4A0C;
+}
+
+.hero,
+.download {
+    background: url("../img/hero.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: auto;
+    color: #fff;
+    padding-top: 73px;
+    padding-bottom: 146px;
+
+}
+
+.download {
+    background: url("../img/imgFonDownload.png");
+    padding-top: 146px;
+    padding-bottom: 133px;
+    background-size: 100% auto;
+}
+
+.block-with-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    max-width: 937px;
+    margin: 0 auto;
+}
+
+
+.block-with-btn p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.block-with-btn p:first-of-type {
+    font-weight: 700;
+}
+
+.block-with-btn h1,
+.block-with-btn h2 {
+    margin: 27px 0;
+    text-align: center;
+    font-family: Poppins;
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.block-with-btn h2 {
+    font-size: 40px;
+}
+
+.wrap-btn {
+    display: flex;
+    gap: 34px;
+    margin-top: 48px;
+}
+
+.block-with-btn button {
+    min-width: 236px;
+    border-radius: 30px;
+    padding: 16px 0px;
+    border: 1px solid #fff;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+.download button {
+    border-radius: 10px;
+    min-width: 142px;
+    padding: 18px 31px;
+}
+
+.download .wrap-btn {
+    gap: 15px;
+}
+
+.download .playstore {
+    padding: 18px 31px;
+}
+
+.download .appstore {
+    padding: 16px 45px;
+}
+
+.block-with-btn .active {
+    background-color: #FA4A0C;
+    box-shadow: 0px 10px 30px 0px rgba(183, 50, 39, 0.20);
+    border: 1px solid #FA4A0C;
+}
+
+.block-imgPhone {
+    text-align: center;
+    margin-top: -270px;
+    margin-left: 20px
+}
+
+.block-imgPhone img {
+    z-index: 5;
+    position: relative;
+}
+
+.block-imgPhone .position-phone {
+    right: 260px;
+    bottom: 140px;
+    z-index: 1;
+}
+
+.wrap {
+    min-width: 1356px;
+    margin: 0 auto;
+    padding-left: 180px;
+    padding-right: 155px;
+}
+
+.wrap figure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrap h3 {
+    color: #FA4A0C;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    margin-top: 0;
+    margin-bottom: 27px;
+}
+
+.wrap p {
+    color: #252B42;
+
+    font-size: 40px;
+}
+
+.wrap p+p {
+    font-size: 24px;
+    color: #737373;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.social-link {
+    display: flex;
+    gap: 24px;
+}

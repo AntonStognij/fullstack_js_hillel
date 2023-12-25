@@ -4,104 +4,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HW6</title>
-    <link rel="stylesheet" href="./style/reset.css">
-    <link rel="stylesheet" href="./style/normalize.css">
-    <link rel="stylesheet" href="./style/fonts.css">
-    <link rel="stylesheet" href="./style/style.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Roboto:wght@100;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/normilize.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <title>HW7</title>
 </head>
 
 <body>
-    <div class="first-block">
-        <div class="wrap">
-            <header>
-                <ul class="navigation">
-                    <li> <a href="#" class="active">Homepage</a></li>
-                    <li> <a href="#">About author</a></li>
-                    <li> <a href="#">Works</a></li>
-                    <li> <a href="#">Process</a></li>
-                    <li> <a href="#">Contacts</a></li>
+    <header class="header">
+        <div class="header__wrapper">
+            <a href="/" class="header__home-link">
+                <img src="./img/logo.png" alt="Bella logotype">
+            </a>
+            <nav class="header__navigation">
+                <ul class="header__list">
+                    <li>
+                        <a href="#" class="active">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Product</a>
+                    </li>
+                    <li>
+                        <a href="#">Faq</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
                 </ul>
-            </header>
-            <section class="first-section">
-                <h1 class="first-section-h1">Design and layout</h1>
-                <p class="first-section-text">Lorem Ipsum is fish text often used in print and web design. Lorem Ipsum
-                    has been the standard "fish" for Latin texts since the early 16th century.</p>
-                <button class="btn" type="button">
-                    WRITE ME
-                </button>
-            </section>
+            </nav>
         </div>
+    </header>
+    <main>
+        <!-- hero section -->
+        <section class="hero">
+            <div class="block-with-btn">
+                <p>Food app</p>
+                <h1>Why stay hungry when you can order form Bella Onojie Playstore</h1>
+                <p>Download the bella onoje’s food app now on</p>
+                <div class="wrap-btn">
+                    <button class="active">Playstore</button>
+                    <button>App store</button>
+                </div>
 
-    </div>
-    <div>
-        <section class="section-text-center">
-            <h2 class="section-text-center-h2">About me</h2>
-            <p class="section-text-center-text">About meLorem Ipsum is fish text often used in print and web design.
-                Lorem
-                Ipsum has been the standard "fish" for Latin texts since the early 16th century.</p>
-        </section>
-
-    </div>
-    <div class="third-block">
-        <div class="wrap">
-            <section class="text-with-img">
-                <div class="block-img">
-                    <img src="./img/Group.png" alt="icon">
-                    <h3>40+</h3>
-                    <p>projects</p>
-                </div>
-                <div class="block-img">
-                    <img src="./img/Group.png" alt="icon">
-                    <h3>40+</h3>
-                    <p>projects</p>
-                </div>
-                <div class="block-img">
-                    <img src="./img/Group.png" alt="icon">
-                    <h3>40+</h3>
-                    <p>projects</p>
-                </div>
-                <div class="block-img">
-                    <img src="./img/Group.png" alt="icon">
-                    <h3>40+</h3>
-                    <p>projects</p>
-                </div>
-                <div class="block-img">
-                    <img src="./img/Group.png" alt="icon">
-                    <h3>40+</h3>
-                    <p>projects</p>
-                </div>
-                <div class="block-img">
-                    <img src="./img/Group.png" alt="icon">
-                    <h3>40+</h3>
-                    <p>projects</p>
-                </div>
-            </section>
-
-        </div>
-
-    </div>
-    <section class="block-four">
-        <div class="wrap">
-            <div class="section-text-center">
-                <h2 class="block-four-h2">How do I work</h2>
-                <p class="block-four-p">Lorem Ipsum is fish text often used in print and web design. Lorem Ipsum has
-                    been the standard "fish" for Latin texts since the early 16th century.</p>
             </div>
-            <iframe width="1120" height="600" src="https://www.youtube.com/embed/M-8FksMVAdU?si=r4CKVg1rIjQhIpyv"
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
+        </section>
+        <!-- mobiles section -->
+        <div class="block-imgPhone">
+            <img src="./img/phoneOne.png" alt="red mobile">
+            <img src="./img/phoneTwo.png" class="position-phone" alt="white mobile">
+            <hr>
         </div>
-    </section>
-    <footer>
-        <div class="wrap">
-            <h3>John Smith</h3>
-            <p>(c) 2018. All rights reserved.</p>
+        <!-- steps section -->
+        <section>
+            <h2>How the app works</h2>
+            <ul class="wrap">
+                <li>
+                    <figure>
+                        <img src="./img/phoneDisplayReg.png" alt="mobile with login">
+                        <figcaption>
+                            <h3>Create an account</h3>
+                            <p>Create/login to an existing account to get started</p>
+                            <p>An account is created with your email and a desired password</p>
+                        </figcaption>
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <figcaption>
+                            <h3>Explore varieties</h3>
+                            <p>Shop for your favorites meal as e dey hot.</p>
+                            <p>Shop for your favorite meals or drinks and enjoy while doing it</p>
+                        </figcaption>
+                        <img src="./img/phoneDisplayFood.png" alt="mobile with food screen">
+                    </figure>
+                </li>
+                <li>
+                    <figure>
+                        <img src="./img/phoneDisplayPayment.png" alt="mobile with payment screen">
+                        <figcaption>
+                            <h3>Checkout</h3>
+                            <p>When you done check out and get it delivered.</p>
+                            <p>When you done check out and get it delivered with ease.</p>
+                        </figcaption>
+                    </figure>
+                </li>
+            </ul>
+        </section>
+        <!-- download section -->
+        <section class="download">
+            <div class="block-with-btn">
+                <h2>Download the app now.</h2>
+                <p>Available on your favorite store. Start your premium experience now</p>
+                <div class="wrap-btn">
+                    <button class="active playstore">Playstore</button>
+                    <button class="appstore">App store</button>
+                </div>
+                
+            </div>
+           
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="header__wrapper ">
+        <a href="#">
+            <img src="./img/logo.png" alt="">
+        </a>
+        <div class="social-link">
+            <img src="./img/twitter.png" alt="twitter">
+            <img src="./img/facebook.png" alt="facebook">
+            <img src="./img/instagram.png" alt="instagram">
         </div>
+        
+        <p>Copywright 2020 Bella Onojie.com</p>
+    </div>
     </footer>
-
 </body>
 
 </html>
