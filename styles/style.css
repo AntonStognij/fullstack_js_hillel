@@ -515,22 +515,27 @@ h2 {
 
 .snow-very-slow {
     animation: snow 70s linear 0s infinite running none;
+    width: 25px;
 }
 
 .snow-slow {
     animation: snow 60s linear 0s infinite running none;
+    width: 15px;
 }
 
 .snow-normal {
     animation: snow 40s linear 0s infinite running none;
+    width: 20px;
 }
 
 .snow-fast {
     animation: snow 30s linear 0s infinite running none;
+    width: 30px;
 }
 
 .snow-very-fast {
     animation: snow 20s linear 0s infinite running none;
+    width: 10px;
 }
 
 .santa {
