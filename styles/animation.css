@@ -1,0 +1,111 @@
+@keyframes snow {
+    0% {
+        top: -5vh;
+    }
+
+    100% {
+        top: 95vh;
+    }
+}
+@keyframes action-santa {
+    0% {
+        left: -135px;
+    }
+
+    20% {
+        left: -135px;
+    }
+
+    40% {
+        left: -75px;
+    }
+
+    60% {
+        left: -75px;
+    }
+
+    80% {
+        left: -135px;
+    }
+
+    100% {
+        left: -135px;
+    }
+}
+@keyframes shadow-change {
+    0% {
+        box-shadow: #f35353 0px 8px 8px, rgba(17, 17, 26, 0.1) 0px 16px 8px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+        background-color: #df1c1c;
+    }
+
+    40% {
+        box-shadow: rgba(13, 223, 41, 0.1) 0px 8px 8px, rgba(13, 223, 41, 0.1) 0px 16px 8px, rgba(13, 223, 41, 0.1) 0px 24px 80px;
+        background-color: #32d147;
+    }
+
+    60% {
+        box-shadow: rgba(48, 236, 10, 0.1) 0px 8px 8px, rgba(45, 224, 9, 0.1) 0px 16px 8px, rgba(45, 224, 9, 0.1) 0px 24px 80px;
+        background-color: #64e927;
+    }
+
+    80% {
+        box-shadow: rgba(226, 241, 5, 0.1) 0px 8px 8px, rgba(226, 241, 5, 0.1) 0px 16px 8px, rgba(226, 241, 5, 0.1) 0px 24px 80px;
+        background-color: #dde93f;
+    }
+
+    80% {
+        box-shadow: rgba(236, 29, 14, 0.1) 0px 8px 8px, rgba(236, 29, 14, 0.1) 0px 16px 8px, rgba(236, 29, 14, 0.1) 0px 24px 80px;
+        background-color: #f86622;
+    }
+
+}
+@keyframes action-elf {
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 0;
+        left: 30%;
+    }
+
+    60% {
+        opacity: 0.8;
+        left: 40%;
+    }
+
+    80% {
+        opacity: 1;
+        left: 47%;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+@keyframes blur {
+    0% {
+        filter: blur(15px);
+        ;
+    }
+
+    20% {
+        filter: blur(7px);
+        ;
+    }
+
+    60% {
+        filter: blur(0px);
+        ;
+    }
+
+    80% {
+        filter: blur(0px);
+        ;
+    }
+
+    80% {
+        filter: blur(15px);
+        ;
+    }
+}
