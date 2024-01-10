@@ -7,7 +7,6 @@
         top: 95vh;
     }
 }
-
 @keyframes action-santa {
     0% {
         left: -135px;
@@ -33,7 +32,6 @@
         left: -135px;
     }
 }
-
 @keyframes shadow-change {
     0% {
         box-shadow: #f35353 0px 8px 8px, rgba(17, 17, 26, 0.1) 0px 16px 8px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
@@ -61,7 +59,6 @@
     }
 
 }
-
 @keyframes action-elf {
     0% {
         opacity: 0;
@@ -86,7 +83,6 @@
         opacity: 0;
     }
 }
-
 @keyframes blur {
     0% {
         filter: blur(15px);
