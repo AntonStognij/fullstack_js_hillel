@@ -1,0 +1,22 @@
+.third-block {
+    background-color: #34547A;
+}
+.text-with-img {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 100px 0; 
+   
+}
+.block-img {
+    min-width: 140px;
+    display: inline-block;
+    h3 {
+        color: #fff;
+    }
+    p {
+        color: #fff; 
+    }
+}
+
+
