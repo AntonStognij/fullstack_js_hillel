@@ -5,7 +5,7 @@ body {
     font-weight: 400;
     font-style: normal;
     height: 100vh;
-    background-image: url("/img/starry_sky.jpg");
+    background-image: url("./img/starry_sky.jpg");
     background-size: cover;
 }
 
