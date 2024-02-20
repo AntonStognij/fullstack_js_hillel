@@ -1,257 +1,236 @@
+let arrCounty = [
+    {
+        id: "1",
+        name: "Україна",
+        price: "500",
+        currency: "$",
+        stylesTop: "50%",
+        stylesLeft: "84%"
+    },
+    {
+        id: "2",
+        name: "Італія",
+        price: "1500",
+        currency: "$",
+        stylesTop: "70%",
+        stylesLeft: "57%"
+    },
+    {
+        id: "3",
+        name: "Франція",
+        price: "2500",
+        currency: "$",
+        stylesTop: "58%",
+        stylesLeft: "35%"
+    },
+    {
+        id: "4",
+        name: "Іспанія",
+        price: "3000",
+        currency: "$",
+        stylesTop: "75%",
+        stylesLeft: "24%"
+    },
+    {
+        id: "5",
+        name: "Англія",
+        price: "2000",
+        currency: "$",
+        stylesTop: "42%",
+        stylesLeft: "28%"
+    }
+]
 
-//використав setTimeout щоб сторінка провантажилась і ми не дивились на білий екран
-setTimeout(() => startGame(), 1000);
 
-//саму гру поділив на етапи-функції, бо по логіці хоті щоб промальовувались елементи послідовно, а повідомлення зупиняють код
-function startGame() {
-    let text = `Привіт, друже! В тебе є унікальна можливість зіграти зі мною у гру "Вгадай число". Правила дуже прості - я загадую число від 1 до 10 і ти маєш його вгадати. 
-    \nЯкщо вгадаєш, то зможеш прийняти участь в інтерактивній історії, де від твоїх рішень залежить фінал історії, ну а якщо ні - зможеш колись спробувати ще! I так поїхали!`;
-    alert(text);
-    text = `Зіграєш зі мною?`;
-    let resChoice = confirm(text);
-    if (resChoice) {
-        let randomNumber = Math.floor(Math.random() * 10) + 1;
-        let elem = document.getElementById('number');
-        elem.innerHTML = randomNumber;
-        setTimeout(() => game(randomNumber), 500);
+//запускаєм додаток
+appTravels();
+
+
+function appTravels() {
+    setTimeout(() => askBudget(), 1500);
+}
+
+//запитує бюджет і запускає різні сценарії
+function askBudget(text = "Це твій космічний консультат з подорожей. Вкажи скільки ти готовий витрати на подорож у розрахунку на одну людину в доларах?") {
+    let budget = prompt(`${text}`)
+    if (!budget) {
+        let text = "Сподіваюсь помандруємо іншим разом! До зустрічі!"
+        let wordsAstronaut = "До зустрічі! =)"
+        alert(text)
+        addClassByClass("circle", "active")
+        changeText(wordsAstronaut, "words-astronaut")
     } else {
-        text = `Можливо в інший раз. До побачення!`;
-        alert(text);
-        createImg("./img/sad.svg", "img-sad", "sad", "place-for-text")
-    }
-
-
-    function game(numberGame) {
-        let textPrompt = `Як думаєш, яке число я загадав?`;
-        let namberUser = prompt(textPrompt);
-        if(!namberUser){
-            text = `Можливо в інший раз дограєш. До побачення!`;
-            alert(text);
+        if (!budget.match(/^\d+$/)) {
+            textPrompt = `Мені потрібна лише цифра і я зможу тобі порадити чудову поїздку`;
+            askBudget(textPrompt)
         } else {
-            if (!namberUser.match(/^\d+$/)) {
-                textPrompt = `Ой, щось не те ти вводиш... Числа - це щось з математики`;
-                alert(textPrompt);
-                game(numberGame);
-            } else {
-                if (namberUser == numberGame) {
-                    textPrompt = `Супер! Ти вгадав! Поїхали далі!`;
-                    alert(textPrompt);
-                    addClass("blur", "without-blur");
-                    setTimeout(() => tellStory(), 2000);
-                } else {
-                    textPrompt = `Нажаль я загадав інше слово...`;
-                    alert(textPrompt);
-                    addClass("blur", "without-blur");
-                    createImg("./img/sad.svg", "img-sad", "sad", "place-for-text")
-                }
-            }
+            textPrompt = `Є! Дякую!`;
+            alert(textPrompt);
+            //відмальовуємо країни
+            setTimeout(() => setСountries(arrCounty, budget), 1500);
+            addClassByClass("circle", "active")
+            let wordsAstronaut = "Привіт! Клікни на країну в яку б ти хотів поїхати, а я перевірю чи тобі вистачить грошей."
+            changeText(wordsAstronaut, "words-astronaut")
         }
-        
-    }
-
-
+    };
 }
 
-//функція починає розповідати історію
-function tellStory() {
-    dellElem("title");
-    dellElem("blur");
-    dellElem("number");
-    addClass("place-for-text", "story");
-    let textH1 = 'Загадкова Історія Скайвокера в епоху Лицарства';
-    createElemText("h1", "place-for-text", textH1);
-    let textP = `У королівстві, де легенди оживають, молодий оруженосець Люк мріє стати рицарем. Він служить Сір Роберту, рицарю, який вважає, що честь — це найвища добродійність.
-    <br>Сір Роберт ставить перед Люком випробування, що визначить його долю.`;
-    createElemText("p", "place-for-text", textP);
-    createImg("./img/Skywalker.png", "img-skywalker", "Skywalker", "main-block")
-    setTimeout(() => actionStore(), 1000);
-    let textConfirm = '';
-    let textTrue = '';
-    let textFalse = '';
-    let count = "";
 
-    function actionStore() {
-        let textAction = `1. Вирушити в ліс\n2. Піти через село\n3. Відправитися до замку дракона`;
-        let action = prompt(textAction)
-        if (action == 1) {
-            count += 1;
-            textP = `Люк зустрічає чарівницю, що пропонує зілля сили в обмін на обіцянку.`
-            createElemText("p", "place-for-text", textP);
-            textConfirm = `Погодитись на пропозицію чарівниці?\n 
-            1 - Так
-            2 - Ні`;
-            textTrue = `Люк отримує надприродну силу, але залишається в боргу перед чарівницею.`;
-            textFalse = `Люк вибирає чесний шлях, відмовляючись від легкого успіху.`
-            setTimeout(() => actionFirstPart(textConfirm, textTrue, textFalse), 1000);
-        } else if (action == 2) {
-            count += 2;
-            textP = `Люк допомагає селянам, які потерпають від голови розбійників.`
-            createElemText("p", "place-for-text", textP);
-            textConfirm = `Допомогти силою чи знайти мирне рішення?\n 
-            1 - Допомогти силою
-            2 - Знайти мирне рішення `;
-            textTrue = `Люк використовує силу для захисту селян, але отримує поранення.`;
-            textFalse = `Люк вирішує конфлікти миром, заробляючи повагу як лідера.`
-            setTimeout(() => actionFirstPart(textConfirm, textTrue, textFalse), 1000);
-        } else if (action == 3) {
-            count += 3;
-            textP = `Люк вирішує випробувати себе, викликаючи дракона на бій.`
-            createElemText("p", "place-for-text", textP);
-            textConfirm = `Що робимо з драконом?\n 
-            1 - Бій з драконом
-            2 - Спроба перемовин`;
-            textTrue = `Люк гине, але його вчинок вважається героїчним.`;
-            textFalse = `Люк дізнається, що дракон не хоче воювати, і вони досягають миру.`
-            setTimeout(() => actionFirstPart(textConfirm, textTrue, textFalse, "1"), 1000);
-        } else if (!action) {
-            alert("На жаль, наша історія залишиться незакінченою... Сподіваюь продовжимо наступного разу =)");
+//функція додає клас по className
+function addClassByClass(classNameElem, classNameAdd) {
+    if (classNameElem) {
+        let elem = document.querySelectorAll(`.${classNameElem}`);
+        elem.forEach(el => {
+            el.classList.add(`${classNameAdd}`);
+        })
+    }
+}
+
+//функція видаляє клас по className
+function removeClassByClass(classNameElem, classNameRemove) {
+    if (classNameElem) {
+        let elem = document.querySelectorAll(`.${classNameElem}`);
+        elem.forEach(el => {
+            el.classList.remove(`${classNameRemove}`);
+        })
+    }
+}
+//функція додає  клас по id
+function addClassById(id, className) {
+    if (id) {
+        let elem = document.getElementById(`${id}`);
+        elem.classList.add(`${className}`);
+    }
+}
+//функція сторює елемент-країну
+function createElemCountry(content, idElem, left, top, budget) {
+    let elem = document.createElement(`div`);
+    elem.innerHTML = `${content}`;
+    let parent = document.getElementById("blok-img");
+    elem.setAttribute("class", "country active-country");
+    elem.setAttribute("id", `${idElem}`);
+    elem.style.left = `${left}`;
+    elem.style.top = `${top}`;
+    elem.addEventListener("click", function (e) {
+        removeClassByClass("country-ok", "country-ok");
+        removeClassByClass("country-not", "country-not")
+        var idElem = e.target.id;;
+        let checkSummRes = checkSumm(budget, arrCounty, idElem)
+        if (checkSummRes.res) {
+            this.setAttribute("class", "country active-country country-ok");
+            setTimeout(() => getNewPrice(checkSummRes.selectPrice, true), 1500);    
         } else {
-            alert("Обери номер з вказаних варіантів");
-            actionStore();
+            if (checkSummRes.arr.length > 0) {
+                checkSummRes.arr.forEach(function (elem) {
+                    addClassById(elem, "country-ok")
+                });
+            }
+            this.setAttribute("class", "country active-country country-not");
         }
 
-        function actionFirstPart(text, textTrue, textFalse, off = false) {
-            let resChoice = prompt(text);
-            if (off != resChoice) {
-                if (resChoice == 1) {
-                    count += 1;
-                    createElemText("p", "place-for-text", textTrue);
-                    setTimeout(() => actionSecondPart(), 1000);
+    });
+    parent.appendChild(elem);
+};
+//функція сторює елементи країни з масиву
+function setСountries(arr, budget) {
+    arr.forEach(function (elem) {
+        createElemCountry(elem.name, elem.id, elem.stylesLeft, elem.stylesTop, budget)
+    });
+};
 
-                } else if (resChoice == 2) {
-                    count += 2;
-                    createElemText("p", "place-for-text", textFalse);
-                    setTimeout(() => actionSecondPart(), 1000);
-                } else {
-                    alert("Обери номер з вказаних варіантів");
-                    actionFirstPart(textConfirm, textTrue, textFalse, "1")
-                }
-            } else {
-                createElemText("p", "place-for-text", textTrue);
-                alert("Нажаль Люк помер =(");
-            }
-
-
-            function actionSecondPart() {
-                textP = `Після повернення з подорожей Люка викликають на турнір.`;
-                createElemText("p", "place-for-text", textP);
-                setTimeout(() => promtForSecondPart(), 1000);
-
-                function promtForSecondPart() {
-                    textAction = `1. Боротьба за честь\n2. Допомога іншому учаснику\n3. Відмова від бою`;
-                    action = prompt(textAction);
-                    if (action == 1) {
-                        count += 1;
-                        textP = `Люк демонструє свої навички, здобуваючи повагу.`
-                        createElemText("p", "place-for-text", textP);
-                        setTimeout(() => actionThreePart(), 1000);
-                    } else if (action == 2) {
-                        count += 2;
-                        textP = `Люк допомагає пораненому рицарю, показуючи своє серце.`
-                        createElemText("p", "place-for-text", textP);
-                        setTimeout(() => actionThreePart(), 1000);
-                    } else if (action == 3) {
-                        count += 3;
-                        textP = `Люк відмовляється боротися, стверджуючи, що справжній рицар знає, коли не варто воювати.`
-                        createElemText("p", "place-for-text", textP);
-                        setTimeout(() => actionThreePart(), 1000);
-                    } else if (!action) {
-                        alert("На жаль, наша історія залишиться незакінченою... Сподіваюь продовжимо наступного разу =)");
-                    } else {
-                        alert("Обери номер з вказаних варіантів");
-                        promtForSecondPart();
-                    }
-                }
-
-                function actionThreePart() {
-                    textP = `Король, вражений діями Люка, пропонує йому останнє завдання.`;
-                    createElemText("p", "place-for-text", textP);
-                    setTimeout(() => promtForThreedPart(), 1000);
-                    function promtForThreedPart(){
-                        textAction = `1. Захистити королівство\n2. Пошук зниклої реліквії\n`;
-                        action = prompt(textAction);
-                        if (action == 1) {
-                            count += 1;
-                            textP = `Люк веде війська проти ворога, демонструючи свою відвагу`
-                            createElemText("p", "place-for-text", textP);
-                            getRes();
-                        } else if (action == 2) {
-                            count += 2;
-                            textP = `Люк вирушає за древньою реліквією, що може врятувати королівство.`
-                            createElemText("p", "place-for-text", textP);
-                            getRes()
-                        } else if (!action) {
-                            alert("На жаль, наша історія залишиться незакінченою... Сподіваюь продовжимо наступного разу =)");
-                        } else {
-                            alert("Обери номер з вказаних варіантів");
-                            actionThreePart();
-                        }
-                    }
-                    //функція дивиться які рішення приймались по ходу
-                    function getRes(){
-                        if (count.match(/^121/)){
-                            textP = `Люк стає рицарем, відомим своєю чесністю та мужністю, обираючи шлях служіння королівству.`
-                            alert(textP);
-                            createElemText("p", "place-for-text", textP);
-                        } else if (count.match(/^223/)){
-                            textP = `Люк залишає турнір, стаючи захисником селян і прикладом для інших, що справжня сила криється в мудрості та співчутті.`
-                            alert(textP);
-                            createElemText("p", "place-for-text", textP);
-                        } else if (count.match(/^3212/)||count.match(/^3222/)||count.match(/^3232/)){
-                            textP = `Люк доводить, що можна знайти мир навіть із драконами, і врятувати королівство без насильства, стаючи легендою.`
-                            alert(textP);
-                            createElemText("p", "place-for-text", textP);
-                        } else {
-                            textP = `Люк красавчик! І жив довго та щасливо! =)`
-                            alert(textP);
-                            createElemText("p", "place-for-text", textP);
-                        }
-                        
-                    }
+//функція сторює елементи країни з масиву
+function changeText(text, id) {
+    if (id) {
+        let elem = document.getElementById(`${id}`);
+        elem.innerHTML = `${text}`;
+    }
+};
+//перевіряємо бюджет
+function checkSumm(summ, arr, id) {
+    let arrNormCounry = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (id == arr[i].id) {
+            if (+summ >= arr[i].price) {
+                let wordsAstronaut = "Ця країна нам по карману! А давай перевіримо, може вдасця поїхати дешевше!"
+                changeText(wordsAstronaut, "words-astronaut")
+                return {
+                    res: true,
+                    arr: [],
+                    selectPrice: arr[i].price
                 }
             }
-
         }
+        if (+summ >= arr[i].price) {
+            arrNormCounry.push(arr[i].id)
+        }
+        let wordsAstronaut = "Нажаль там задорого... Якщо вдасця знайти дешевше поїздки, то я покажу тобі де вони. Я підсвічу тобі їх зеленим!"
+        changeText(wordsAstronaut, "words-astronaut")
+    }
+    return {
+        res: false,
+        arr: arrNormCounry,
+        selectPrice: null
     }
 }
 
+function getNewPrice(oldPrice, start) {
+    let textPromt;
+    let promoCode;
+    if (start) {
+        textPromt = "Підкажи, ти має якийсь код знижки? Якщо так - вкажи його нижче!";
+        promoCode = prompt(`${textPromt}`).trim();
+    }
+    textPromt = "Скільки осіб буде їхати? Вкажи числом кількість!";
+    let countPeople = prompt(`${textPromt}`);
+    if (!countPeople) {
+        textPromt = "Добре, буду вважати що одна!";
+        countPeople = 1;
+        alert(textPromt)
+        let res = checkingСonditions(oldPrice, promoCode, countPeople, 1000)
+        changeText(res, "words-astronaut");
+    } else if (!countPeople.match(/^\d+$/)) {
+        getNewPrice(oldPrice, false)
+    } else {
+        let res = checkingСonditions(oldPrice, promoCode, countPeople, 1000)
+        changeText(res, "words-astronaut");
+    }
 
-
-
-
-
-//функція додає клас
-function addClass(id, nameClass) {
-    let elem = document.getElementById(id);
-    elem.classList.add(nameClass);
-}
-//видяляє елемент
-function dellElem(id) {
-    let elem = document.getElementById(id);
-    elem.remove();
-}
-
-//функція створює елемент
-function createElemText(type, idParent, text) {
-    let parent = document.getElementById(idParent);
-    let elem = document.createElement(type);
-    elem.innerHTML = text;
-    parent.appendChild(elem);
-}
-
-function createImg(url, className, alt, idParent) {
-    let parent = document.getElementById(idParent);
-    let elem = document.createElement("img");
-    elem.setAttribute("src", url);
-    elem.setAttribute("class", className);
-    elem.setAttribute("alt", alt);
-    parent.appendChild(elem);
 }
 
-
-
-
-
-
-
-
+function checkingСonditions(oldPrice, promoCode, countPeople, discountAmount) {
+    let text;
+    let purchaseAmount = oldPrice * countPeople;
+    let startAmount = purchaseAmount;
+    switch (promoCode) {
+        case 'NEWYEAR':
+            purchaseAmount *= 0.8;
+            text = "Ти маєш знижку по промокоду NEWYEAR (20%)"
+            break;
+        case 'BLACKFRIDAY':
+            purchaseAmount *= 0.7;
+            text = "Ти маєш знижку по промокоду BLACKFRIDAY (30%)"
+            break;
+        case 'SUMMERSALE':
+            purchaseAmount *= 0.85;
+            text = "Ти маєш знижку по промокоду SUMMERSALE (15%)"
+            break;
+        default:
+            purchaseAmount *= 0.95;
+            text = "Ти маєш знижку (5%)"
+    }
+    console.log(countPeople)
+    if (countPeople >= 3) {
+        purchaseAmount *= 0.95;
+        text = text + " + в тебе ще є знижка за кількість людей (5%)"
+    }
+    if (+oldPrice > discountAmount) {
+        purchaseAmount *= 0.9;
+        text = text + " + в тебе ще є знижка за загальну суму витрат (10%)"
+    }
+    if (purchaseAmount < startAmount) {
+        text = `${text}. От ти вже і зекономив! Замість ${startAmount}, тобі поїздка обійдеться в ${purchaseAmount}$. Вітаю!`
+    } else {
+        text = `Щось зі знижками тобі не пощастило... =(. Поїздка тобі обійдеться в ${purchaseAmount}$.  Сподіваюсь від подорожі ти отримаєш море задоволення!`
+    }
+    return text;
+};
