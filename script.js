@@ -218,12 +218,11 @@ function checkingСonditions(oldPrice, promoCode, countPeople, discountAmount) {
             purchaseAmount *= 0.95;
             text = "Ти маєш знижку (5%)"
     }
-    console.log(countPeople)
     if (countPeople >= 3) {
         purchaseAmount *= 0.95;
         text = text + " + в тебе ще є знижка за кількість людей (5%)"
     }
-    if (+oldPrice > discountAmount) {
+    if (+purchaseAmount > discountAmount) {
         purchaseAmount *= 0.9;
         text = text + " + в тебе ще є знижка за загальну суму витрат (10%)"
     }
