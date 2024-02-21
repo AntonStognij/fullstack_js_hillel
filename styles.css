@@ -1,0 +1,208 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Kode Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+    height: 100vh;
+    background-image: url("./img/starry_sky.jpg");
+    background-size: cover;
+}
+
+.main-block {
+    margin: 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    position: relative;
+}
+
+.img {
+    position: relative;
+    background-color: #47416856;
+    width: 150%;
+    left: -25%;
+    top: -20%;
+    backdrop-filter: blur(195px);
+}
+
+.moon {
+    min-width: 250px;
+    min-height: 250px;
+    background-color: #909096;
+    box-shadow: 22px 22px 44px #9f9caf,
+        -22px -22px 44px #ffffff;
+    backdrop-filter: blur(50px);
+    border-radius: 50%;
+    position: absolute;
+    left: -50px;
+}
+
+.blok-img {
+    overflow: hidden;
+    position: relative;
+    border-radius: 50%;
+    background: #9ac3f1;
+    box-shadow: 15px 15px 15px #454f5c,
+        -15px -15px 15px #222931;
+    width: 900px;
+    height: 750px;
+}
+
+.wrap-img {
+    position: relative;
+    padding: 50px;
+}
+
+.astronaut {
+    width: 350px;
+    animation: fly 5s 1s infinite forwards;
+}
+
+.wrap-astronaut {
+    position: relative;
+    z-index: 5;
+}
+
+.circle {
+    position: absolute;
+    background-color: #c2c2ca;
+    border-radius: 50%;
+    opacity: 0;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}
+
+.circle1 {
+    height: 25px;
+    width: 50px;
+    left: 263px;
+    top: 110px;
+    transition: opacity 0.5s;
+}
+
+.circle2 {
+    min-height: 65px;
+    width: 175px;
+    left: 271px;
+    top: 42px;
+    transition: opacity 0.7s;
+}
+
+.circle3 {
+    min-height: 165px;
+    width: 375px;
+    left: 271px;
+    top: -130px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s;
+    border: 1px solid rgb(61, 63, 65);
+}
+
+.country {
+    position: absolute;
+    color: #222931;
+    font-size: 22px;
+    cursor: pointer;
+    font-weight: bold;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    text-shadow: 3px 5px 6px rgb(125, 161, 214);
+    opacity: 0;
+    animation: country-action 3s 1s infinite forwards;
+}
+
+.active-country {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+.country-ok {
+    color: #36740d;
+    font-size: 26px;
+    background: #98c978;
+}
+
+.country-not {
+    color: #ea2832;
+    font-size: 26px;
+    background: #ecce92;
+}
+
+
+
+.country:hover {
+    font-size: 26px;
+    color: #eb7b1f;
+    transition: color 0.5s, font-size 0.3s;
+
+}
+
+.active {
+    opacity: 1;
+}
+
+@keyframes fly {
+    0% {
+
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes country-action {
+    0% {
+
+        text-shadow: 3px 5px 6px rgb(125, 161, 214);
+    }
+
+    50% {
+        text-shadow: 3px 8px 6px rgb(223, 246, 17);
+    }
+
+    100% {
+        text-shadow: 3px 5px 6px rgb(125, 161, 214);
+    }
+}
+
+
+@media screen and (max-width: 1440px) {
+    .blok-img {
+        width: 600px;
+        height: 450px;
+    }
+
+    .circle3 {
+        min-height: 115px;
+        width: 275px;
+        top: -97px
+    }
+
+    .moon {
+        min-width: 150px;
+        min-height: 150px
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .main-block {
+        justify-content: center;
+        align-items: center;
+        flex-direction: column-reverse;
+    }
+}
