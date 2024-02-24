@@ -48,7 +48,6 @@ function askBudget(text = "Привіт! Перевіримо удачу чи с
             changeClass("speak", "speak-passive")
             changeText(expressionsСroupiers.letsPlay, "speak", "speak-passive");
             confitGame.arrCountChips = getCountChips(confitGame.budget);
-            console.log(confitGame.arrCountChips)
             creationImgChips(confitGame.arrCountChips);
             //дії на клік на кнопку
             let btn = document.getElementById("btn");
@@ -165,24 +164,20 @@ function getCountChips(summ) {
         if (count100 > 0) {
             balanceAmount = summ - (count100 * 100);
         } 
-        console.log("count100",count100)
     }
     if (balanceAmount>=25){
         count25 = Math.trunc((balanceAmount * 0.5) / 25);
         if (count25 > 0) {
             balanceAmount = balanceAmount - (count25 * 25);
         } 
-        console.log("count25",count25)
     }
     if (balanceAmount >= 10) {
         count10 = Math.trunc((balanceAmount * 0.5) / 10);
         if (count10 > 0) {
             balanceAmount = balanceAmount - (count10 * 10);
         } 
-        console.log("count10",count10)
     }
     count5 = balanceAmount / 5;
-    console.log("count5",count5)
     changeText(`${summ}$`, "balans-user")
     return [
         {
@@ -226,7 +221,9 @@ function checkСoordinates(elem) {
 //функція підраховує баланси для запасу і ставки
 function getSummBalans() {
     let sumRed = 0;
+    confitGame.sumRed=0;
     let sumBlack = 0;
+    confitGame.sumBlack =0;
     let sumGreen = 0;
     let elemRed = document.querySelectorAll('[data-color="red"]');
     elemRed.forEach(el => {
@@ -246,8 +243,8 @@ function getSummBalans() {
         confitGame.sumGreen = sumGreen
     })
     if (sumRed > 0) {
-        addClassById("red", "active-color");
         addClassById("black", "passive");
+        addClassById("red", "active-color");
         //не світимо кнопку плей, якщо гра скінчилась
         if (confitGame.canPlay) {
             addClassById("btn", "active");
@@ -299,14 +296,13 @@ function createElemChips(className, idParent, url, summ) {
         offsetX = event.offsetX;
         offsetY = event.offsetY;
         addClassByClass("speak", "speak-passive")
-        console.log("confitGame start",confitGame)
     })
     elem.addEventListener("dragend", function (event) {
         elem.style.top = `${event.pageY - offsetY}px`;
         elem.style.left = `${event.pageX - offsetX}px`;
         checkСoordinates(elem);
         getSummBalans();
-        console.log("confitGame",confitGame)
+        console.log(confitGame)
     })
     elemidParent.appendChild(elem);
 }
@@ -356,4 +352,17 @@ function changeText(text, id, classNameRemove = false) {
     }
 
 };
+
+
+// перше завдання
+let year = 1900;
+
+while (year <= 2100) {
+    if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
+        console.log(year + " - високосний");
+    } else {
+        console.log(year + " - не високосний");
+    } 
+    year++;
+}
 
