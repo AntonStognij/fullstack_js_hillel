@@ -1,235 +1,359 @@
-let arrCounty = [
-    {
-        id: "1",
-        name: "Україна",
-        price: "500",
-        currency: "$",
-        stylesTop: "50%",
-        stylesLeft: "84%"
-    },
-    {
-        id: "2",
-        name: "Італія",
-        price: "1500",
-        currency: "$",
-        stylesTop: "70%",
-        stylesLeft: "57%"
-    },
-    {
-        id: "3",
-        name: "Франція",
-        price: "2500",
-        currency: "$",
-        stylesTop: "58%",
-        stylesLeft: "35%"
-    },
-    {
-        id: "4",
-        name: "Іспанія",
-        price: "3000",
-        currency: "$",
-        stylesTop: "75%",
-        stylesLeft: "24%"
-    },
-    {
-        id: "5",
-        name: "Англія",
-        price: "2000",
-        currency: "$",
-        stylesTop: "42%",
-        stylesLeft: "28%"
-    }
-]
+//зробив глобальний обєкт з певними конфігураціями по грі
+let confitGame = {
+    canPlay: true,
+    arrCountChips: [],
+    sumRed: 0,
+    sumBlack: 0,
+    sumGreen: 0,
+    budget: 0
+}
+//запускаємо гру
+toGame();
 
-
-//запускаєм додаток
-appTravels();
-
-
-function appTravels() {
+//фунція запускає гру
+function toGame() {
     setTimeout(() => askBudget(), 1500);
 }
 
-//запитує бюджет і запускає різні сценарії
-function askBudget(text = "Це твій космічний консультат з подорожей. Вкажи скільки ти готовий витрати на подорож у розрахунку на одну людину в доларах?") {
-    let budget = prompt(`${text}`)
-    if (!budget) {
-        let text = "Сподіваюсь помандруємо іншим разом! До зустрічі!"
-        let wordsAstronaut = "До зустрічі! =)"
-        alert(text)
-        addClassByClass("circle", "active")
-        changeText(wordsAstronaut, "words-astronaut")
+//функція спілкується з користувачем
+function askBudget(text = "Привіт! Перевіримо удачу чи свою інтуіцію? Давай спробуємо! Вкажи свій бюджет, тільки врахуй, що у нас мінімальна ставка 5$ і давай будемо грати на суму не більше ніж 5000$.") {
+    confitGame.budget = +prompt(text);
+    let expressionsСroupiers = {
+        wordsСroupier: "До зустрічі! =)",
+        letsPlay: `Привіт! Я буду твоїм круп'є! Давай по правилам пройдемось - тобі потрібно лише обрати колір, поставивши на нього скільки фішок, скільки вважаєш за потрібним і натиснути кнопку "play", а далі я вже крутну барабан і подивимось чи в тебе гарна інтуіція!Якщо виграєш, то ставка подвоюється, коли виграєш 20000$ ти зірвеш наш Джекпот!`,
+        go: "І так поїхали, перетягуй фішки на колір і натискай кнопку!",
+        winRate: "Вов! Твоя ставка зіграла! Вітаю! Ставка була подвоєна! Можеш продовжувати ставити на бажаний колір! =)",
+        notWinRate: "Нажаль не пощастило... Наступного разу спробуй уважніше слухати інтуіцію!",
+        notWin: "Нажаль, грошей для ставок вже немає! Остання ставка не зайшла... Сподіваюсь пощастить наступного разу!",
+        win: "Ура!!! Здається у нас новий чемпіон! Шкода, що це лише гра і у нас не можна вевести готівку ... =)"
+    }
+    let textForUser = {
+        textGoodBye: "Сподіваюсь зіграємо іншим разом! До зустрічі!",
+        notNamber: "Вкажи лише суму, слова тут зайві ! =)",
+        goodRes: `Є! Дякую!`,
+        badTextBudget: `Давай ще раз по умовам! Вкажи число кратне 5 і не быльше 5000! =)`
+    }
+    if (!confitGame.budget) {
+        alert(textForUser.textGoodBye)
+        changeClass("speak", "speak-passive")
+        changeText(expressionsСroupiers.wordsСroupier, "speak", "speak-passive");
+        confitGame.canPlay = false;
     } else {
-        if (!budget.match(/^\d+$/)) {
-            textPrompt = `Мені потрібна лише цифра і я зможу тобі порадити чудову поїздку`;
-            askBudget(textPrompt)
+        if (!`${confitGame.budget}`.match(/^\d+$/)) {
+            askBudget(textForUser.notNamber)
+        } else if (confitGame.budget % 5 !== 0 || confitGame.budget > 5000) {
+            askBudget(textForUser.badTextBudget)
         } else {
-            textPrompt = `Є! Дякую!`;
-            alert(textPrompt);
-            //відмальовуємо країни
-            setTimeout(() => setСountries(arrCounty, budget), 1500);
-            addClassByClass("circle", "active")
-            let wordsAstronaut = "Привіт! Клікни на країну в яку б ти хотів поїхати, а я перевірю чи тобі вистачить грошей."
-            changeText(wordsAstronaut, "words-astronaut")
+            alert(textForUser.goodRes);
+            changeClass("speak", "speak-passive")
+            changeText(expressionsСroupiers.letsPlay, "speak", "speak-passive");
+            confitGame.arrCountChips = getCountChips(confitGame.budget);
+            console.log(confitGame.arrCountChips)
+            creationImgChips(confitGame.arrCountChips);
+            //дії на клік на кнопку
+            let btn = document.getElementById("btn");
+            btn.addEventListener("click", function () {
+                let res = spinCircle(confitGame.lastRes)
+                let color = getColorCircle(res);
+                let summRate;
+                //перевіряємо результат, засунув в сет таймаут, щоб дочекатись коли колесу докрутиться
+                setTimeout(() => { if ((color == "black" && confitGame.sumBlack > 0) || (color == "red" && confitGame.sumRed > 0)) {
+                    //ставка зайшла
+                    changeClass("speak", "speak-passive")
+                    changeText(expressionsСroupiers.winRate, "speak", "speak-passive");
+                    summRate = confitGame.sumBlack > 0 ? confitGame.sumBlack : confitGame.sumRed;
+                    confitGame.budget = confitGame.sumGreen + summRate * 2;
+                    dellСhips();
+                    confitGame.arrCountChips = getCountChips(confitGame.budget);
+                    creationImgChips(confitGame.arrCountChips);
+
+                } else {
+                    //ставка не зайшла
+                    changeClass("speak", "speak-passive")
+                    changeText(expressionsСroupiers.notWinRate, "speak", "speak-passive");
+                    summRate = confitGame.sumBlack > 0 ? confitGame.sumBlack : confitGame.sumRed;
+                    confitGame.budget -= summRate;
+                    dellСhips();
+                    confitGame.arrCountChips = getCountChips(confitGame.budget);
+                    creationImgChips(confitGame.arrCountChips);
+
+                }
+                //перевіряємо що там в клієнта по результату вийшло
+                if (!confitGame.budget) {
+                    changeClass("speak", "speak-passive")
+                    changeText(expressionsСroupiers.notWin, "speak", "speak-passive");
+                    
+                    confitGame.canPlay = false
+                } else if (confitGame.budget >= 20000) {
+                    changeClass("speak", "speak-passive")
+                    changeText(expressionsСroupiers.win, "speak", "speak-passive");
+                    confitGame.canPlay = false;
+
+                }
+                removeClassName("active-color");
+                removeClassName("passive");}, 5500);
+                removeClassByClass("btn", "active")
+            });
         }
     };
+}
+
+//функція крутить колесо
+function spinCircle() {
+    let randomNumber = randomInteger(720, 1800);
+    let circle = document.getElementById("circle");
+    circle.style.transform = `rotate(${randomNumber}deg)`;
+    return randomNumber;
+
+}
+//функція перевіряє результат 
+function getColorCircle(resReg) {
+    //перевіряємо чи ділиться значення на 360
+    let multiplier = Math.trunc(resReg / 360);
+    if (multiplier > 1) {
+        resReg -= multiplier * 360;
+    }
+    if (resReg >= 0 && resReg <= 45) {
+        return "black"
+    } else if (resReg >= 45 && resReg <= 135) {
+        return "red"
+    } else if (resReg >= 135 && resReg <= 225) {
+        return "black"
+    } else if (resReg >= 225 && resReg <= 315) {
+        return "red"
+    } else {
+        return "black"
+    }
+}
+//генерує випадкове число в інтервалі
+function randomInteger(min, max) {
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+}
+
+//функція або додає або видаляє клас
+function changeClass(idParent, className) {
+    let elem = document.getElementById(idParent);
+    elem.classList.toggle(className);
+}
+
+
+//функція відмальовує фішки
+function creationImgChips(arr) {
+    let objChips = {
+        "5": "./img/5.png",
+        "10": "./img/10.png",
+        "25": "./img/25.png",
+        "100": "./img/100.png",
+    }
+    for (let i = 0; i < arr.length; i++) {
+        for (let n = 1; n <= arr[i].count; n++) {
+            createElemChips(`chips ${arr[i].className}`, "balans", objChips[arr[i].key], arr[i].key)
+        }
+    }
+}
+
+//функція формує фішки, пропорції сам накидав, щоб різні були
+function getCountChips(summ) {
+    let count100 = 0;
+    let count25 = 0;
+    let count10 = 0;
+    let count5 = 0;
+    let balanceAmount = summ;
+    if (balanceAmount >= 100){
+        count100 = Math.trunc((summ * 0.6) / 100);
+        if (count100 > 0) {
+            balanceAmount = summ - (count100 * 100);
+        } 
+        console.log("count100",count100)
+    }
+    if (balanceAmount>=25){
+        count25 = Math.trunc((balanceAmount * 0.5) / 25);
+        if (count25 > 0) {
+            balanceAmount = balanceAmount - (count25 * 25);
+        } 
+        console.log("count25",count25)
+    }
+    if (balanceAmount >= 10) {
+        count10 = Math.trunc((balanceAmount * 0.5) / 10);
+        if (count10 > 0) {
+            balanceAmount = balanceAmount - (count10 * 10);
+        } 
+        console.log("count10",count10)
+    }
+    count5 = balanceAmount / 5;
+    console.log("count5",count5)
+    changeText(`${summ}$`, "balans-user")
+    return [
+        {
+            "key": "100",
+            "count": count100,
+            "className": "chips100"
+        },
+        {
+            "key": "25",
+            "count": count25,
+            "className": "chips25"
+        },
+        {
+            "key": "10",
+            "count": count10,
+            "className": "chips10"
+        },
+        {
+            "key": "5",
+            "count": count5,
+            "className": "chips5"
+        }
+    ]
+}
+
+
+//функція перевіряє куди почали робити ставки
+function checkСoordinates(elem) {
+    var rect = elem.getBoundingClientRect();
+    let elemRed = document.getElementById("red").getBoundingClientRect();
+    let elemBlack = document.getElementById("black").getBoundingClientRect();
+    if (rect.top >= elemRed.top && rect.bottom <= elemRed.bottom && rect.left >= elemRed.left && rect.right <= elemRed.right) {
+        elem.setAttribute("data-color", "red");
+    } else if (rect.top >= elemBlack.top && rect.bottom <= elemBlack.bottom && rect.left >= elemBlack.left && rect.right <= elemBlack.right) {
+        elem.setAttribute("data-color", "black");
+    } else {
+        elem.setAttribute("data-color", "green");
+    }
+}
+
+//функція підраховує баланси для запасу і ставки
+function getSummBalans() {
+    let sumRed = 0;
+    let sumBlack = 0;
+    let sumGreen = 0;
+    let elemRed = document.querySelectorAll('[data-color="red"]');
+    elemRed.forEach(el => {
+        sumRed += +el.getAttribute('data-summ')
+        confitGame.sumRed = sumRed;
+
+    })
+    let elemBlack = document.querySelectorAll('[data-color="black"]');
+    elemBlack.forEach(el => {
+        sumBlack += +el.getAttribute('data-summ')
+        confitGame.sumBlack = sumBlack;
+    })
+
+    let elemGreen = document.querySelectorAll('[data-color="green"]');
+    elemGreen.forEach(el => {
+        sumGreen += +el.getAttribute('data-summ')  
+        confitGame.sumGreen = sumGreen
+    })
+    if (sumRed > 0) {
+        addClassById("red", "active-color");
+        addClassById("black", "passive");
+        //не світимо кнопку плей, якщо гра скінчилась
+        if (confitGame.canPlay) {
+            addClassById("btn", "active");
+        }
+
+    } else if (sumBlack > 0) {
+        addClassById("red", "passive");
+        addClassById("black", "active-color");
+        //не світимо кнопку плей, якщо гра скінчилась
+        if (confitGame.canPlay) {
+            addClassById("btn", "active");
+            // changeClass("btn", "pasive-btn")
+        }
+    } else {
+        removeClassName("active-color");
+        removeClassName("passive");
+        removeClassName("active");
+    }
+    changeText(`${sumGreen}$`, "balans-user");
+    return {
+        sumRed: sumRed,
+        sumBlack: sumBlack,
+        sumGreen: sumGreen
+    }
+
+}
+
+//функція видаляє елементи
+function dellСhips() {
+    let elem = document.querySelectorAll('.chips ');
+    elem.forEach(el => {
+        el.remove();
+    })
+
+}
+
+//генеруємо фішки і навішуємо на них можливість переміщення
+function createElemChips(className, idParent, url, summ) {
+    let elemidParent = document.getElementById(idParent);
+    let elem = document.createElement("img");
+    elem.setAttribute("src", url);
+    elem.className = className;
+    elem.setAttribute("alt", "chips");
+    elem.setAttribute("data-summ", summ);
+    elem.setAttribute("data-color", "green");
+    let offsetX;
+    let offsetY;
+    elem.addEventListener("dragstart", function (event) {
+        offsetX = event.offsetX;
+        offsetY = event.offsetY;
+        addClassByClass("speak", "speak-passive")
+        console.log("confitGame start",confitGame)
+    })
+    elem.addEventListener("dragend", function (event) {
+        elem.style.top = `${event.pageY - offsetY}px`;
+        elem.style.left = `${event.pageX - offsetX}px`;
+        checkСoordinates(elem);
+        getSummBalans();
+        console.log("confitGame",confitGame)
+    })
+    elemidParent.appendChild(elem);
 }
 
 
 //функція додає клас по className
 function addClassByClass(classNameElem, classNameAdd) {
     if (classNameElem) {
-        let elem = document.querySelectorAll(`.${classNameElem}`);
-        elem.forEach(el => {
-            el.classList.add(`${classNameAdd}`);
-        })
+        let elem = document.getElementsByClassName(classNameElem);
+        for (let i = 0; i < elem.length; i++) {
+            elem[i].classList.add(classNameAdd);
+        }
     }
 }
 
 //функція видаляє клас по className
-function removeClassByClass(classNameElem, classNameRemove) {
-    if (classNameElem) {
-        let elem = document.querySelectorAll(`.${classNameElem}`);
-        elem.forEach(el => {
-            el.classList.remove(`${classNameRemove}`);
-        })
-    }
+function removeClassName(classNameRemove) {
+    let elem = document.querySelectorAll(`.${classNameRemove}`);
+    elem.forEach(el => {
+        el.classList.remove(classNameRemove);
+    })
 }
 //функція додає  клас по id
 function addClassById(id, className) {
     if (id) {
-        let elem = document.getElementById(`${id}`);
-        elem.classList.add(`${className}`);
+        let elem = document.getElementById(id);
+        elem.classList.add(className);
     }
 }
-//функція сторює елемент-країну
-function createElemCountry(content, idElem, left, top, budget) {
-    let elem = document.createElement(`div`);
-    elem.innerHTML = `${content}`;
-    let parent = document.getElementById("blok-img");
-    elem.setAttribute("class", "country active-country");
-    elem.setAttribute("id", `${idElem}`);
-    elem.style.left = `${left}`;
-    elem.style.top = `${top}`;
-    elem.addEventListener("click", function (e) {
-        removeClassByClass("country-ok", "country-ok");
-        removeClassByClass("country-not", "country-not")
-        var idElem = e.target.id;;
-        let checkSummRes = checkSumm(budget, arrCounty, idElem)
-        if (checkSummRes.res) {
-            this.setAttribute("class", "country active-country country-ok");
-            setTimeout(() => getNewPrice(checkSummRes.selectPrice, true), 1500);    
-        } else {
-            if (checkSummRes.arr.length > 0) {
-                checkSummRes.arr.forEach(function (elem) {
-                    addClassById(elem, "country-ok")
-                });
-            }
-            this.setAttribute("class", "country active-country country-not");
-        }
 
-    });
-    parent.appendChild(elem);
-};
-//функція сторює елементи країни з масиву
-function setСountries(arr, budget) {
-    arr.forEach(function (elem) {
-        createElemCountry(elem.name, elem.id, elem.stylesLeft, elem.stylesTop, budget)
-    });
-};
 
-//функція сторює елементи країни з масиву
-function changeText(text, id) {
+//функція видаляє клас 
+function removeClassByClass(id, classNameRemove) {
     if (id) {
-        let elem = document.getElementById(`${id}`);
-        elem.innerHTML = `${text}`;
-    }
-};
-//перевіряємо бюджет
-function checkSumm(summ, arr, id) {
-    let arrNormCounry = [];
-    for (let i = 0; i < arr.length; i++) {
-        if (id == arr[i].id) {
-            if (+summ >= arr[i].price) {
-                let wordsAstronaut = "Ця країна нам по карману! А давай перевіримо, може вдасця поїхати дешевше!"
-                changeText(wordsAstronaut, "words-astronaut")
-                return {
-                    res: true,
-                    arr: [],
-                    selectPrice: arr[i].price
-                }
-            }
-        }
-        if (+summ >= arr[i].price) {
-            arrNormCounry.push(arr[i].id)
-        }
-        let wordsAstronaut = "Нажаль там задорого... Якщо вдасця знайти дешевше поїздки, то я покажу тобі де вони. Я підсвічу тобі їх зеленим!"
-        changeText(wordsAstronaut, "words-astronaut")
-    }
-    return {
-        res: false,
-        arr: arrNormCounry,
-        selectPrice: null
+        let elem = document.getElementById(id);
+            elem.classList.remove(`${classNameRemove}`);
     }
 }
-
-function getNewPrice(oldPrice, start) {
-    let textPromt;
-    let promoCode;
-    if (start) {
-        textPromt = "Підкажи, ти має якийсь код знижки? Якщо так - вкажи його нижче!";
-        promoCode = prompt(`${textPromt}`).trim();
-    }
-    textPromt = "Скільки осіб буде їхати? Вкажи числом кількість!";
-    let countPeople = prompt(`${textPromt}`);
-    if (!countPeople) {
-        textPromt = "Добре, буду вважати що одна!";
-        countPeople = 1;
-        alert(textPromt)
-        let res = checkingСonditions(oldPrice, promoCode, countPeople, 1000)
-        changeText(res, "words-astronaut");
-    } else if (!countPeople.match(/^\d+$/)) {
-        getNewPrice(oldPrice, false)
-    } else {
-        let res = checkingСonditions(oldPrice, promoCode, countPeople, 1000)
-        changeText(res, "words-astronaut");
+//функція виводить текст по словам
+function changeText(text, id, classNameRemove = false) {
+    if (id) {
+        let elem = document.getElementById(id);
+        if (classNameRemove) {
+            removeClassName(classNameRemove);
+        }
+        elem.innerHTML = text;
     }
 
-}
-
-function checkingСonditions(oldPrice, promoCode, countPeople, discountAmount) {
-    let text;
-    let purchaseAmount = oldPrice * countPeople;
-    let startAmount = purchaseAmount;
-    switch (promoCode) {
-        case 'NEWYEAR':
-            purchaseAmount *= 0.8;
-            text = "Ти маєш знижку по промокоду NEWYEAR (20%)"
-            break;
-        case 'BLACKFRIDAY':
-            purchaseAmount *= 0.7;
-            text = "Ти маєш знижку по промокоду BLACKFRIDAY (30%)"
-            break;
-        case 'SUMMERSALE':
-            purchaseAmount *= 0.85;
-            text = "Ти маєш знижку по промокоду SUMMERSALE (15%)"
-            break;
-        default:
-            purchaseAmount *= 0.95;
-            text = "Ти маєш знижку (5%)"
-    }
-    if (countPeople >= 3) {
-        purchaseAmount *= 0.95;
-        text = text + " + в тебе ще є знижка за кількість людей (5%)"
-    }
-    if (+purchaseAmount > discountAmount) {
-        purchaseAmount *= 0.9;
-        text = text + " + в тебе ще є знижка за загальну суму витрат (10%)"
-    }
-    if (purchaseAmount < startAmount) {
-        text = `${text}. От ти вже і зекономив! Замість ${startAmount}, тобі поїздка обійдеться в ${purchaseAmount}$. Вітаю!`
-    } else {
-        text = `Щось зі знижками тобі не пощастило... =(. Поїздка тобі обійдеться в ${purchaseAmount}$.  Сподіваюсь від подорожі ти отримаєш море задоволення!`
-    }
-    return text;
 };
+
